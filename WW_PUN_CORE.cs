@@ -11,20 +11,15 @@ namespace WhiteWolf.Pun{
 
         public bool isConnected;
         public bool inRoom;
-
         [Space]
-
-        public string roomName;
-        public byte maxPlayers = 2;
-        public string playersInRoom;
-        public string[] players;
-
+        public DictionaryRoom room;
+        public string typeRoom;
         [Space]
-
         public string yourName;
 
         /*--------------------------------------------------------------------*/
 
+        private string roomName;
         //private PhotonView photonView;
 
         /*--------------------------------------------------------------------*/
@@ -43,13 +38,6 @@ namespace WhiteWolf.Pun{
             isConnected = PhotonNetwork.IsConnected;
             inRoom = PhotonNetwork.InRoom;
 
-            playersInRoom = $"{PhotonNetwork.PlayerList.Length}/{maxPlayers}";
-
-            players = new string[ PhotonNetwork.PlayerList.Length ];
-
-            for ( int i = 0; i< PhotonNetwork.PlayerList.Length; i++ )
-                players[ i ] = PhotonNetwork.PlayerList[ i ].NickName;
-
         }
 
         /*--------------------------------------------------------------------*/
@@ -58,12 +46,15 @@ namespace WhiteWolf.Pun{
 
             print( "Connected to Master!" );
 
-            RoomOptions options = new RoomOptions();
-            options.MaxPlayers = maxPlayers;
-
+            var options = new RoomOptions
+            {
+                MaxPlayers = room.GetDictionary()[$"{typeRoom}"]
+            };
+            
             roomName = $"{Random.Range( 1000, 9999 )}";
-
             PhotonNetwork.JoinOrCreateRoom( $"{roomName}", options, TypedLobby.Default );
+
+            print( PhotonNetwork.CountOfRooms );
 
         }
 

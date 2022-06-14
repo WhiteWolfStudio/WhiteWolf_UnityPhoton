@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace WhiteWolf {
+namespace WhiteWolf.Pun {
 
     public class WW_PhotonPlayer : MonoBehaviour {
 
@@ -13,22 +13,22 @@ namespace WhiteWolf {
 
         /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
-        PhotonView photonView;
+        private PhotonView _photonView;
 
-        bool player;
+        private bool _player;
 
         /*––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 
-        void Start(){
+        private void Start(){
 
-            photonView = GetComponent<PhotonView>();
+            _photonView = GetComponent<PhotonView>();
 
-            if ( photonView.IsMine ) { player = true; }
-            if ( showName && player ){ this.gameObject.name = photonView.Owner.NickName; }
+            if ( _photonView.IsMine ) { _player = true; }
+            if ( showName && _player ){ this.gameObject.name = _photonView.Owner.NickName; }
 
         }
 
-        void Update() => this.gameObject.name = PhotonNetwork.NickName;
+        private void Update() => this.gameObject.name = PhotonNetwork.NickName;
 
     }
 
